@@ -1,4 +1,8 @@
-# CS225-Final-Project
+
+# <ins>CS225-Final-Project </ins>
+
+
+# Team Contract
 
 ## Communication
 
