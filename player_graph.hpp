@@ -7,7 +7,7 @@ using namespace std;
 
 struct Node
 {
-
+    int id;
     string id_;
     string team_;
     string year_;
