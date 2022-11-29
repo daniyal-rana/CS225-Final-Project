@@ -39,3 +39,12 @@ struct Node
 };
 
 std::vector<Node *> file_to_graph(const std::string filename);
+
+class PlayerGraph {
+    public:
+    std::vector<std::string> BFS(std::string orgin, std::string end);
+    Node* PlayerExists(std::string name);
+    private:
+    std::vector<Node *> file_to_graph(const std::string filename);
+
+}
