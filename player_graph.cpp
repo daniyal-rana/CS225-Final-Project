@@ -81,13 +81,13 @@ std::vector<std::string> PlayerGraph::BFS(int startID, int endID) {
                 previous[it.id] = curr;     //keep track of list of visited player
             } 
         }
-        if (curr == endNode) {
+        if (curr == endNode) { // stop once the player is reached
             break;
         }
         q.pop();
     }
 
-    if (curr != endNode) {
+    if (curr != endNode) { //if theres no path return an empty vector
         vector<string> T;
         return T;
     }
@@ -97,7 +97,7 @@ std::vector<std::string> PlayerGraph::BFS(int startID, int endID) {
     while (curr != file_to_graph[startID]) {
         curr = prev[currNode];
         currNode = curr.id;
-        result.push_back(curr.id_);
+        result.insert(result.begin(), curr.id_); //Add to result vector in proper reverse order
     }
     return result;
 }
