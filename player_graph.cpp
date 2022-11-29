@@ -54,3 +54,57 @@ std::vector<Node *> file_to_graph(const std::string filename)
 
     return node_vect;
 }
+
+std::vector<std::string> PlayerGraph::BFS(int startID, int endID) {
+    vector<bool> visited(file_to_graph.size(), false); // mark all nodes as unvisited
+
+    std::queue<Node*> q; //queue for bfs
+    // std::vector<Node*> playerList;
+    std::vector<Node*> previous{nullptr};   //to track down the order of final nodes     
+    
+    Node* curr = file_to_graph[startID];    //get starting node from list of nodes
+    Node* endNode = file_to_graph[endID];   //get final node
+
+    q.push_back(start);     //put starting point in queue
+    previous[startNode.id] = curr;  //initialize starting point
+    int currNode = startID;     // use id to track where in the list of nodes the player is in
+    visited[currNode] = true;  
+
+    while (!q.empty()) {
+        curr = q.front();
+        currNode = startNode.id;
+
+        for (auto it : curr.adj_) { // look thru adj list
+            if(!visited[it.id]) {       // check if next player has been visited already
+                visited[it.id] = true;  //mark player as visited
+                q.push_back(it);        //enqueue next player
+                previous[it.id] = curr;     //keep track of list of visited player
+            } 
+        }
+        if (curr == endNode) {
+            break;
+        }
+        q.pop();
+    }
+
+    if (curr != endNode) {
+        vector<string> T;
+        return T;
+    }
+
+    std::vector<std::string> result;
+    result.push_back(curr.id_);
+    while (curr != file_to_graph[startID]) {
+        curr = prev[currNode];
+        currNode = curr.id;
+        result.push_back(curr.id_);
+    }
+    return result;
+}
+
+Node* PlayerGraph::PlayerExists(std::string name) {
+    for (Node* node : file_to_graph) {
+        if (node.id_ == name) return node;
+    }
+    return nullptr;
+}
