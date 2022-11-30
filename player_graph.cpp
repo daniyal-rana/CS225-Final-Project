@@ -3,6 +3,7 @@
 #include <iostream>
 #include <sstream>
 #include <map>
+#include <queue>
 std::vector<Node *> PlayerGraph::file_to_graph(const std::string filename)
 {
     std::vector<Node *> node_vect;
@@ -65,25 +66,25 @@ std::vector<std::string> PlayerGraph::BFS(int startID, int endID) {
 
     std::queue<Node*> q; //queue for bfs
     // std::vector<Node*> playerList;
-    std::vector<Node*> previous{nullptr};   //to track down the order of final nodes     
+    std::vector<Node*> previous{nodeVector.size(),nullptr};   //to track down the order of final nodes     
     
     Node* curr = nodeVector[startID];    //get starting node from list of nodes
     Node* endNode = nodeVector[endID];   //get final node
 
-    q.push_back(start);     //put starting point in queue
-    previous[startNode.id] = curr;  //initialize starting point
+    q.push(curr);     //put starting point in queue
+    previous[(*curr).id] = curr;  //initialize starting point
     int currNode = startID;     // use id to track where in the list of nodes the player is in
     visited[currNode] = true;  
 
     while (!q.empty()) {
         curr = q.front();
-        currNode = startNode.id;
+        currNode = (*curr).id;
 
-        for (auto it : curr.adj_) { // look thru adj list
-            if(!visited[it.id]) {       // check if next player has been visited already
-                visited[it.id] = true;  //mark player as visited
-                q.push_back(it);        //enqueue next player
-                previous[it.id] = curr;     //keep track of list of visited player
+        for (auto it : (*curr).adj_) { // look thru adj list
+            if(!visited[(*it).id]) {       // check if next player has been visited already
+                visited[(*it).id] = true;  //mark player as visited
+                q.push(it);        //enqueue next player
+                previous[(*it).id] = curr;     //keep track of list of visited player
             } 
         }
         if (curr == endNode) { // stop once the player is reached
@@ -98,18 +99,18 @@ std::vector<std::string> PlayerGraph::BFS(int startID, int endID) {
     }
 
     std::vector<std::string> result;
-    result.push_back(curr.id_);
+    result.push_back((*curr).id_);
     while (curr != nodeVector[startID]) {
-        curr = prev[currNode];
-        currNode = curr.id;
-        result.insert(result.begin(), curr.id_); //Add to result vector in proper reverse order
+        curr = previous[currNode];
+        currNode = (*curr).id;
+        result.insert(result.begin(), (*curr).id_); //Add to result vector in proper reverse order
     }
     return result;
 }
 
 Node* PlayerGraph::PlayerExists(std::string name) {
     for (Node* node : nodeVector) {
-        if (node.id_ == name) return node;
+        if ((*node).id_ == name) return node;
     }
     return nullptr;
 }
