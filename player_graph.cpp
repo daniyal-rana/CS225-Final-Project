@@ -3,7 +3,7 @@
 #include <iostream>
 #include <sstream>
 #include <map>
-std::vector<Node *> file_to_graph(const std::string filename)
+std::vector<Node *> PlayerGraph::file_to_graph(const std::string filename)
 {
     std::vector<Node *> node_vect;
     std::map<std::pair<std::string, std::string>, std::set<Node *>> mutual; //maps team/year pair to set of teammate nodes
