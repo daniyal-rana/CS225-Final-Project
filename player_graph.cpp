@@ -55,15 +55,20 @@ std::vector<Node *> file_to_graph(const std::string filename)
     return node_vect;
 }
 
+
+PlayerGraph::PlayerGraph(const std::string filename) {
+        nodeVector = file_to_graph(filename);
+}
+
 std::vector<std::string> PlayerGraph::BFS(int startID, int endID) {
-    vector<bool> visited(file_to_graph.size(), false); // mark all nodes as unvisited
+    vector<bool> visited(nodeVector.size(), false); // mark all nodes as unvisited
 
     std::queue<Node*> q; //queue for bfs
     // std::vector<Node*> playerList;
     std::vector<Node*> previous{nullptr};   //to track down the order of final nodes     
     
-    Node* curr = file_to_graph[startID];    //get starting node from list of nodes
-    Node* endNode = file_to_graph[endID];   //get final node
+    Node* curr = nodeVector[startID];    //get starting node from list of nodes
+    Node* endNode = nodeVector[endID];   //get final node
 
     q.push_back(start);     //put starting point in queue
     previous[startNode.id] = curr;  //initialize starting point
@@ -94,7 +99,7 @@ std::vector<std::string> PlayerGraph::BFS(int startID, int endID) {
 
     std::vector<std::string> result;
     result.push_back(curr.id_);
-    while (curr != file_to_graph[startID]) {
+    while (curr != nodeVector[startID]) {
         curr = prev[currNode];
         currNode = curr.id;
         result.insert(result.begin(), curr.id_); //Add to result vector in proper reverse order
@@ -103,7 +108,7 @@ std::vector<std::string> PlayerGraph::BFS(int startID, int endID) {
 }
 
 Node* PlayerGraph::PlayerExists(std::string name) {
-    for (Node* node : file_to_graph) {
+    for (Node* node : nodeVector) {
         if (node.id_ == name) return node;
     }
     return nullptr;
