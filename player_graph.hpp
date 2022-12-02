@@ -19,6 +19,13 @@ struct Node
         year_ = YEAR;
         per_ = PER;
     }
+    Node() {
+        id_ = "";
+        team_ = "";
+        year_ = "";
+        per_ = 0;
+        id = 0;
+    }
 
     std::set<Node *> adj_; //adjac
     std::vector<std::pair<Node *, float>> edges_;
@@ -42,11 +49,11 @@ struct Node
 class PlayerGraph {
     public:
     PlayerGraph(const std::string filename);
-    std::vector<std::string> BFS(std::string orgin, std::string end);
+    std::vector<std::string> BFS(int startID, int endID);
     Node* PlayerExists(std::string name);
     std::vector<Node *> file_to_graph(const std::string filename);
 
     private:
     std::vector<Node *> nodeVector;
 
-}
+};
