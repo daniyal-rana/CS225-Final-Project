@@ -1,11 +1,12 @@
-#include "player_graph.hpp"
+#include "player_graph.h"
 #include <fstream>
 #include <iostream>
 #include <sstream>
 #include <map>
 #include <queue>
+#include <cmath>
 
-std::vector<Node *> file_to_graph(const std::string filename)
+std::vector<Node *> PlayerGraph::file_to_graph(const std::string filename)
 {
     std::vector<Node *> node_vect;
     std::map<std::pair<std::string, std::string>, std::set<Node *>> mutual; // maps team/year pair to set of teammate nodes
@@ -61,60 +62,64 @@ std::vector<Node *> file_to_graph(const std::string filename)
     return node_vect;
 }
 
-/* PlayerGraph::PlayerGraph(const std::string filename) {
+PlayerGraph::PlayerGraph(const std::string filename) {
         nodeVector = file_to_graph(filename);
+        edgeVector = std::vector<Edge>();
 }
+
 std::vector<std::string> PlayerGraph::BFS(int startID, int endID) {
-    vector<bool> visited(nodeVector.size(), false); // mark all nodes as unvisited
-    std::queue<Node*> q; //queue for bfs
-    // std::vector<Node*> playerList;
-    std::vector<Node*> previous{nullptr};   //to track down the order of final nodes
+    // vector<bool> visited(nodeVector.size(), false); // mark all nodes as unvisited
+    // std::queue<Node*> q; //queue for bfs
+    // // std::vector<Node*> playerList;
+    // std::vector<Node*> previous{nullptr};   //to track down the order of final nodes
 
-    Node* curr = nodeVector[startID];    //get starting node from list of nodes
-    Node* endNode = nodeVector[endID];   //get final node
-    q.push_back(start);     //put starting point in queue
-    previous[startNode.id] = curr;  //initialize starting point
-    int currNode = startID;     // use id to track where in the list of nodes the player is in
-    visited[currNode] = true;
+    // Node* curr = nodeVector[startID];    //get starting node from list of nodes
+    // Node* endNode = nodeVector[endID];   //get final node
+    // q.push_back(start);     //put starting point in queue
+    // previous[startNode.id] = curr;  //initialize starting point
+    // int currNode = startID;     // use id to track where in the list of nodes the player is in
+    // visited[currNode] = true;
 
-    while (!q.empty()) {
-        curr = q.front();
-        currNode = startNode.id;
-        for (auto it : curr.adj_) { // look thru adj list
-            if(!visited[it.id]) {       // check if next player has been visited already
-                visited[it.id] = true;  //mark player as visited
-                q.push_back(it);        //enqueue next player
-                previous[it.id] = curr;     //keep track of list of visited player
-            }
-        }
-        if (curr == endNode) { // stop once the player is reached
-            break;
-        }
-        q.pop();
-    }
-    if (curr != endNode) { //if theres no path return an empty vector
-        vector<string> T;
-        return T;
-    }
-    std::vector<std::string> result;
-    result.push_back(curr.id_);
-    while (curr != nodeVector[startID]) {
-        curr = prev[currNode];
-        currNode = curr.id;
-        result.insert(result.begin(), curr.id_); //Add to result vector in proper reverse order
-    }
-    return result;
+    // while (!q.empty()) {
+    //     curr = q.front();
+    //     currNode = startNode.id;
+    //     for (auto it : curr.adj_) { // look thru adj list
+    //         if(!visited[it.id]) {       // check if next player has been visited already
+    //             visited[it.id] = true;  //mark player as visited
+    //             q.push_back(it);        //enqueue next player
+    //             previous[it.id] = curr;     //keep track of list of visited player
+    //         }
+    //     }
+    //     if (curr == endNode) { // stop once the player is reached
+    //         break;
+    //     }
+    //     q.pop();
+    // }
+    // if (curr != endNode) { //if theres no path return an empty vector
+    //     vector<string> T;
+    //     return T;
+    // }
+    // std::vector<std::string> result;
+    // result.push_back(curr.id_);
+    // while (curr != nodeVector[startID]) {
+    //     curr = prev[currNode];
+    //     currNode = curr.id;
+    //     result.insert(result.begin(), curr.id_); //Add to result vector in proper reverse order
+    // }
+    // return result;
+    return std::vector<std::string>();
 }
+
 Node* PlayerGraph::PlayerExists(std::string name) {
     for (Node* node : nodeVector) {
-        if (node.id_ == name) return node;
+        if (name.find(node->id_) != std::string::npos) return node;
     }
-    return nullptr; */
-// }
+    return nullptr;
+}
 
 std::pair<std::vector<int>, std::vector<int>> PlayerGraph::Djikstras(int src) {
     std::vector<int> distances(nodeVector.size(), INT_MAX);
-    std::vector<int> prev(nodeVector.size(), NULL);
+    std::vector<int> prev(nodeVector.size(), -1);
     std::vector<bool> visited(nodeVector.size(), false);
     std::priority_queue<std::pair<int, int>, std::vector<pair<int, int>>, std::greater<std::pair<int, int>>> heap;
 
@@ -153,7 +158,7 @@ std::pair<std::vector<int>, std::vector<int>> PlayerGraph::Djikstras(std::string
         src++;
     }
 
-    if (src == nodeVector.size()) {
+    if (src == (int)nodeVector.size()) {
         std::cout << "Player does not exist" << std::endl;
         return std::pair<std::vector<int>, std::vector<int>>(std::vector<int>(), std::vector<int>());
     }
@@ -161,7 +166,7 @@ std::pair<std::vector<int>, std::vector<int>> PlayerGraph::Djikstras(std::string
     return Djikstras(src);
 }
 
-std::vector<Coordinate> PlayerGraph::fruchtermanReingold(int height, int width, double k = 0.1, double t = 0.1, int iterations = 100) {
+std::vector<Coordinate> PlayerGraph::fruchtermanReingold(int height, int width, double k, double t, int iterations) {
     std::vector<Coordinate> positions;
     for (auto& n : positions) {
         n.x = rand() % width;
@@ -170,8 +175,8 @@ std::vector<Coordinate> PlayerGraph::fruchtermanReingold(int height, int width, 
     for (int i = 0; i < iterations; i++) {
         std::vector<Coordinate> forces(positions.size(), {0, 0});
         // Calculate repulsive forces
-        for (int j = 0; j < positions.size(); j++) {
-            for (int k = j + 1; k < positions.size(); k++) { 
+        for (unsigned j = 0; j < positions.size(); j++) {
+            for (unsigned k = j + 1; k < positions.size(); k++) { 
                 double dx = positions[j].x - positions[k].x;
                 double dy = positions[j].y - positions[k].y;
                 double d = std::sqrt(dx * dx + dy * dy);
@@ -197,7 +202,7 @@ std::vector<Coordinate> PlayerGraph::fruchtermanReingold(int height, int width, 
                 forces[e.v].y += f * dy / d;
             }
         }
-        for (int j = 0; j < positions.size(); j++) {
+        for (unsigned j = 0; j < positions.size(); j++) {
             double dx = t * forces[j].x;
             double dy = t * forces[j].y;
             double d = sqrt(dx * dx + dy * dy);
@@ -214,4 +219,15 @@ std::vector<Coordinate> PlayerGraph::fruchtermanReingold(int height, int width, 
         t -= 0.1;
     }
     return positions;
+}
+
+cs225::PNG PlayerGraph::drawGraph(int height, int width) {
+    std::vector<Coordinate> positions = fruchtermanReingold(height , width, 0.1, 0.1, 100);
+    cs225::PNG img;
+    img.resize(width, height);
+    for (Coordinate position : positions) {
+        cs225::HSLAPixel& pixel = img.getPixel(position.x, position.y);
+        pixel.l = 0;
+    }
+    return img;
 }
