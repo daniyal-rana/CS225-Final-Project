@@ -3,16 +3,18 @@
 #include <iostream>
 #include <sstream>
 #include <map>
-std::vector<Node *> PlayerGraph::file_to_graph(const std::string filename)
+std::vector<Node *> file_to_graph(const std::string filename)
 {
     std::vector<Node *> node_vect;
-    std::map<std::pair<std::string, std::string>, std::set<Node *>> mutual; //maps team/year pair to set of teammate nodes
+    std::map<std::pair<std::string, std::string>, std::set<Node *>> mutual; // maps team/year pair to set of teammate nodes
+                                                                            // std::map<std::pair<std::string, std::string>, std::unordered_map<Node *, float>> mutual;
     std::ifstream file(filename);
     std::string line;
+    unsigned idx = 0;
     if (file.is_open())
     {
-        std::getline(file, line);        //skip header line
-        while (std::getline(file, line)) //construct nodes + adjacency lists
+        std::getline(file, line);        // skip header line
+        while (std::getline(file, line)) // construct nodes + adjacency lists
         {
 
             std::vector<string> line_to_string;
@@ -24,39 +26,40 @@ std::vector<Node *> PlayerGraph::file_to_graph(const std::string filename)
                 line_to_string.push_back(col_item);
             }
 
-            Node *node = new Node(line_to_string[1], line_to_string[6], line_to_string[2], std::stof(line_to_string[line_to_string.size() - 1]));
+            Node *node = new Node(idx, line_to_string[1], line_to_string[6], line_to_string[2], std::stof(line_to_string[line_to_string.size() - 1]));
             std::pair<std::string, std::string> team_year = std::make_pair(node->team_, node->year_);
-            if (mutual.find(team_year) != mutual.end()) //has mutual teammates
+
+            if (mutual.find(team_year) != mutual.end()) // has mutual teammates
             {
-                node->adj_ = mutual[team_year];
+
                 for (Node *old_node : mutual[team_year])
                 {
-                    old_node->adj_.insert(node);
+                    float diff = (old_node->per_ + node->per_) / 2; // edge weight between 2 nodes
+                    old_node->adj_[node] = diff;                    // add edge in prev node adj map
+                    node->adj_[old_node] = diff;                    // add edge in cur node adj map
                 }
                 mutual[team_year].insert(node);
             }
-            else //no mutual yet
+            else // no mutual yet
             {
-                mutual[team_year].insert(node);
+                mutual[team_year].insert(node); // no edges to add (teammates not found yet)
             }
-            node_vect.push_back(node);
+            node_vect.push_back(node); // add every new node to vect
+            idx++;
         }
     }
 
-    /*     for (Node *node : node_vect)
+    for (Node *node : node_vect)
     {
         std::cout << "PRINT NODE" << std::endl;
         node->print();
         node->print_adj();
-    } */
-
-    //construct edges?
+    }
 
     return node_vect;
 }
 
-
-PlayerGraph::PlayerGraph(const std::string filename) {
+/* PlayerGraph::PlayerGraph(const std::string filename) {
         nodeVector = file_to_graph(filename);
 }
 
@@ -65,15 +68,15 @@ std::vector<std::string> PlayerGraph::BFS(int startID, int endID) {
 
     std::queue<Node*> q; //queue for bfs
     // std::vector<Node*> playerList;
-    std::vector<Node*> previous{nullptr};   //to track down the order of final nodes     
-    
+    std::vector<Node*> previous{nullptr};   //to track down the order of final nodes
+
     Node* curr = nodeVector[startID];    //get starting node from list of nodes
     Node* endNode = nodeVector[endID];   //get final node
 
     q.push_back(start);     //put starting point in queue
     previous[startNode.id] = curr;  //initialize starting point
     int currNode = startID;     // use id to track where in the list of nodes the player is in
-    visited[currNode] = true;  
+    visited[currNode] = true;
 
     while (!q.empty()) {
         curr = q.front();
@@ -84,7 +87,7 @@ std::vector<std::string> PlayerGraph::BFS(int startID, int endID) {
                 visited[it.id] = true;  //mark player as visited
                 q.push_back(it);        //enqueue next player
                 previous[it.id] = curr;     //keep track of list of visited player
-            } 
+            }
         }
         if (curr == endNode) { // stop once the player is reached
             break;
@@ -111,5 +114,5 @@ Node* PlayerGraph::PlayerExists(std::string name) {
     for (Node* node : nodeVector) {
         if (node.id_ == name) return node;
     }
-    return nullptr;
-}
+    return nullptr; */
+// }
