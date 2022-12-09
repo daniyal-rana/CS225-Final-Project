@@ -3,7 +3,10 @@
 #include <iostream>
 #include <sstream>
 #include <map>
+<<<<<<< HEAD
 #include <queue>
+=======
+>>>>>>> 0363f2257cd786f72cb08a2076415670be85b11b
 std::vector<Node *> file_to_graph(const std::string filename)
 {
     std::vector<Node *> node_vect;
@@ -68,12 +71,20 @@ std::vector<std::string> PlayerGraph::BFS(int startID, int endID) {
     std::queue<Node*> q; //queue for bfs
     // std::vector<Node*> playerList;
     std::vector<Node*> previous{nullptr};   //to track down the order of final nodes
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0363f2257cd786f72cb08a2076415670be85b11b
     Node* curr = nodeVector[startID];    //get starting node from list of nodes
     Node* endNode = nodeVector[endID];   //get final node
     q.push_back(start);     //put starting point in queue
     previous[startNode.id] = curr;  //initialize starting point
     int currNode = startID;     // use id to track where in the list of nodes the player is in
     visited[currNode] = true;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0363f2257cd786f72cb08a2076415670be85b11b
     while (!q.empty()) {
         curr = q.front();
         currNode = startNode.id;
@@ -108,6 +119,7 @@ Node* PlayerGraph::PlayerExists(std::string name) {
     }
     return nullptr; */
 // }
+<<<<<<< HEAD
 
 std::pair<std::vector<int>, std::vector<int>> PlayerGraph::Djikstras(int src) {
     std::vector<int> distances(nodeVector.size(), INT_MAX);
@@ -212,3 +224,5 @@ std::vector<Coordinate> PlayerGraph::fruchtermanReingold(int height, int width, 
     }
     return positions;
 }
+=======
+>>>>>>> 0363f2257cd786f72cb08a2076415670be85b11b
