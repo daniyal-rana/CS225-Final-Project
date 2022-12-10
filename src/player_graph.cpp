@@ -5,6 +5,8 @@
 #include <map>
 #include <queue>
 #include <cmath>
+#include <algorithm>
+
 
 std::vector<Node *> PlayerGraph::file_to_graph(const std::string filename)
 {
@@ -67,47 +69,69 @@ PlayerGraph::PlayerGraph(const std::string filename) {
         edgeVector = std::vector<Edge>();
 }
 
-std::vector<std::string> PlayerGraph::BFS(int startID, int endID) {
-    // vector<bool> visited(nodeVector.size(), false); // mark all nodes as unvisited
-    // std::queue<Node*> q; //queue for bfs
-    // // std::vector<Node*> playerList;
-    // std::vector<Node*> previous{nullptr};   //to track down the order of final nodes
+std::vector<std::string> PlayerGraph::BFS(std::string startID, std::string endID) {
+    int src = 0;
+    int endp = 0;
+    bool foundsrc = false;
+    bool foundend = false;
+    for (Node* player : nodeVector) {
+        std::string id = player->id_;
+        std::string pyear = player->year_;
+        if (id.find(startID) != std::string::npos) {
+            foundsrc = true;
+        }
+        if (id.find(endID) != std::string::npos) {
+            foundend = true;
+        }
+        if (!foundsrc) src++;
+        if (!foundend) endp++;
+    }
 
-    // Node* curr = nodeVector[startID];    //get starting node from list of nodes
-    // Node* endNode = nodeVector[endID];   //get final node
-    // q.push_back(start);     //put starting point in queue
-    // previous[startNode.id] = curr;  //initialize starting point
-    // int currNode = startID;     // use id to track where in the list of nodes the player is in
-    // visited[currNode] = true;
+    if (src == (int)nodeVector.size() || endp == (int)nodeVector.size()) {
+        std::cout << "Player does not exist" << std::endl;
+        return std::vector<std::string>();
+    }
 
-    // while (!q.empty()) {
-    //     curr = q.front();
-    //     currNode = startNode.id;
-    //     for (auto it : curr.adj_) { // look thru adj list
-    //         if(!visited[it.id]) {       // check if next player has been visited already
-    //             visited[it.id] = true;  //mark player as visited
-    //             q.push_back(it);        //enqueue next player
-    //             previous[it.id] = curr;     //keep track of list of visited player
-    //         }
-    //     }
-    //     if (curr == endNode) { // stop once the player is reached
-    //         break;
-    //     }
-    //     q.pop();
-    // }
-    // if (curr != endNode) { //if theres no path return an empty vector
-    //     vector<string> T;
-    //     return T;
-    // }
-    // std::vector<std::string> result;
-    // result.push_back(curr.id_);
-    // while (curr != nodeVector[startID]) {
-    //     curr = prev[currNode];
-    //     currNode = curr.id;
-    //     result.insert(result.begin(), curr.id_); //Add to result vector in proper reverse order
-    // }
-    // return result;
-    return std::vector<std::string>();
+    std::vector<std::string> result = BFS(src, endp);
+    if (result.size() == 0) {
+        std::cout << "Connection between " << startID << " and " << endID <<  "does not exist" << std::endl;
+    } else  {
+        std::cout<< "Connection Exist" << std::endl;
+    }
+    return result;
+}
+  
+
+std::vector<std::string> PlayerGraph::BFS(int startingNode, int finishNode) {
+    std::vector<int> prev(nodeVector.size(), -1);
+    std::vector<bool> visited(nodeVector.size(), false);
+    std::queue<int> q;
+
+    q.push(startingNode);
+    visited[startingNode] = true;
+
+    while (!q.empty()) {
+        int v = q.front();
+        Node* curr = nodeVector[v];
+        q.pop();
+
+        for (auto neigh : curr->adj_) {
+            if (visited[neigh.first->idx] == false) {
+                prev[neigh.first->idx] = v;
+                q.push(neigh.first->idx);
+            }
+        }
+        visited[v] = true;
+        if (v == finishNode) break;
+    }
+
+    std::vector<std::string> result;
+    while (finishNode != -1) {
+        result.push_back(nodeVector[finishNode]->id_);
+        finishNode = prev[finishNode];
+    }
+    std::reverse(result.begin(), result.end());
+    return result;    
 }
 
 Node* PlayerGraph::PlayerExists(std::string name) {
