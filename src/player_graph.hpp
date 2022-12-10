@@ -67,13 +67,8 @@ struct Edge
 class PlayerGraph
 {
 public:
-    PlayerGraph(const std::string filename);
-    std::vector<std::string> BFS(int orgin, int end);
-    Node *PlayerExists(std::string name);
-    std::pair<std::vector<int>, std::vector<int>> Djikstras(std::string playerName, std::string year);
     // std::vector<Coordinate> fruchtermanReingold(int height, int width, double k, double t, int iterations);
     // cs225::PNG drawGraph(int height, int width);
-    std::vector<Node *> file_to_graph(const std::string filename);
 
     struct Player // single player->multiple nodes that each represent season
     {
@@ -128,8 +123,15 @@ public:
         }
     };
 
+    PlayerGraph(const std::string filename);
+    std::vector<std::string> BFS(int orgin, int end);
+    Node *PlayerExists(std::string name);
+    std::pair<std::vector<int>, std::vector<int>> Djikstras(std::string playerName, std::string year);
+    std::vector<Player *> file_to_graph(const std::string filename);
+
 private:
     std::vector<Node *> nodeVector;
+    std::vector<Player *> playerVector;
     std::vector<Edge> edgeVector;
     std::pair<std::vector<int>, std::vector<int>> Djikstras(int src);
 };

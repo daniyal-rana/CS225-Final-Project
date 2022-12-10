@@ -8,10 +8,10 @@
 
 PlayerGraph::PlayerGraph(const std::string filename)
 {
-    nodeVector = file_to_graph(filename);
+    playerVector = file_to_graph(filename);
 }
 
-std::vector<Node *> PlayerGraph::file_to_graph(const std::string filename)
+std::vector<PlayerGraph::Player *> PlayerGraph::file_to_graph(const std::string filename)
 {
     static std::unordered_map<std::string, std::vector<Node *>> name_to_nodes;
     static std::unordered_map<std::string, Player *> name_to_player;
@@ -102,7 +102,7 @@ std::vector<Node *> PlayerGraph::file_to_graph(const std::string filename)
         name_to_player["Kevin Love"]->print();
         name_to_player["Kevin Love"]->print_adj();
         // it works :) */
-    return node_vect;
+    return player_vect;
 }
 
 std::vector<std::string> PlayerGraph::BFS(int startID, int endID)

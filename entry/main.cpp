@@ -6,6 +6,6 @@ int main()
     PlayerGraph playerGraph(filename);
 
     // playerGraph.drawGraph(1000, 1000).writeToFile("./myImage.png");
-    // std::cout << "Hello" << std::endl;
+    std::cout << "Hello" << std::endl;
     return 0;
 }
