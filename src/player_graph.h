@@ -58,7 +58,8 @@ struct Edge {
 class PlayerGraph {
     public:
     PlayerGraph(const std::string filename);
-    std::vector<std::string> BFS(int orgin, int end);
+    std::vector<std::string> BFS(std::string startID, std::string endID);
+    std::vector<std::string> BFS(int startingNode, int finishNode);
     Node* PlayerExists(std::string name);
     std::pair<std::vector<int>, std::vector<int> > Djikstras(std::string playerName, std::string year);
     std::vector<Coordinate> fruchtermanReingold(int height, int width, double k, double t, int iterations);
