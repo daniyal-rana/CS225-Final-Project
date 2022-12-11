@@ -1,6 +1,6 @@
 CMakeFiles/main.dir/entry/main.cpp.o: \
-  /workspaces/CS225-Final-Project/entry/main.cpp \
-  /workspaces/CS225-Final-Project/src/player_graph.h \
+  /workspaces/CS225/CS225-Final-Project/entry/main.cpp \
+  /workspaces/CS225/CS225-Final-Project/src/player_graph.h \
   /usr/bin/../lib/gcc/aarch64-linux-gnu/11/../../../../include/c++/11/string \
   /usr/bin/../lib/gcc/aarch64-linux-gnu/11/../../../../include/aarch64-linux-gnu/c++/11/bits/c++config.h \
   /usr/bin/../lib/gcc/aarch64-linux-gnu/11/../../../../include/aarch64-linux-gnu/c++/11/bits/os_defines.h \
@@ -216,7 +216,7 @@ CMakeFiles/main.dir/entry/main.cpp.o: \
   /usr/bin/../lib/gcc/aarch64-linux-gnu/11/../../../../include/c++/11/debug/safe_local_iterator.tcc \
   /usr/bin/../lib/gcc/aarch64-linux-gnu/11/../../../../include/c++/11/cfloat \
   /usr/lib/llvm-14/lib/clang/14.0.0/include/float.h \
-  /workspaces/CS225-Final-Project/lib/cs225/PNG.h \
-  /workspaces/CS225-Final-Project/lib/cs225/HSLAPixel.h \
+  /workspaces/CS225/CS225-Final-Project/lib/cs225/PNG.h \
+  /workspaces/CS225/CS225-Final-Project/lib/cs225/HSLAPixel.h \
   /usr/bin/../lib/gcc/aarch64-linux-gnu/11/../../../../include/c++/11/sstream \
   /usr/bin/../lib/gcc/aarch64-linux-gnu/11/../../../../include/c++/11/bits/sstream.tcc
