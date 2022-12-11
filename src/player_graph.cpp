@@ -6,6 +6,8 @@
 #include <queue>
 #include <cmath>
 #include <algorithm>
+#include <algorithm>
+
 
 std::vector<Node *> PlayerGraph::file_to_graph(const std::string filename)
 {
