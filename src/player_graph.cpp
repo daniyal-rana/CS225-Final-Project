@@ -9,63 +9,6 @@
 
 std::vector<Node *> PlayerGraph::file_to_graph(const std::string filename)
 {
-    /*
-    std::vector<Node *> node_vect;
-    std::map<std::pair<std::string, std::string>, std::set<Node *>> mutual; // maps team/year pair to set of teammate nodes
-                                                                            // std::map<std::pair<std::string, std::string>, std::unordered_map<Node *, float>> mutual;
-    std::ifstream file(filename);
-    std::string line;
-    unsigned idx = 0;
-    if (file.is_open())
-    {
-        std::getline(file, line);        // skip header line
-        while (std::getline(file, line)) // construct nodes + adjacency lists
-        {
-
-            std::vector<string> line_to_string;
-            stringstream ss(line);
-            while (ss.good())
-            {
-                string col_item;
-                std::getline(ss, col_item, ',');
-                line_to_string.push_back(col_item);
-            }
-
-            Node *node = new Node(idx, line_to_string[1], line_to_string[6], line_to_string[2], std::stof(line_to_string[line_to_string.size() - 1]));
-            std::pair<std::string, std::string> team_year = std::make_pair(node->team_, node->year_);
-
-            if (mutual.find(team_year) != mutual.end()) // has mutual teammates
-            {
-
-                for (Node *old_node : mutual[team_year])
-                {
-                    float diff = (old_node->per_ + node->per_) / 2; // edge weight between 2 nodes
-                    old_node->adj_[node] = diff;                    // add edge in prev node adj map
-                    node->adj_[old_node] = diff;                    // add edge in cur node adj map
-                }
-                mutual[team_year].insert(node);
-            }
-            else // no mutual yet
-            {
-                mutual[team_year].insert(node); // no edges to add (teammates not found yet)
-            }
-            node_vect.push_back(node); // add every new node to vect
-            idx++;
-        }
-    }
-
-    return node_vect;
-    */
-
-    // Redo to make a graph of all time
-    // In order to do this, we must keep track of a player's teammates throughout every year
-    // Make a map that maps a player's name to the player's information 
-    // Information: List of the names of their all time teammates, PER combined from all seasons
-    // Iterate through the map and create graph using the information
-    // For each player in the map:
-    // Create an adjacency list. We can do this my using our list of their all time teammates and using the map.
-    // Store idx of player into node
-    // Push back the newly created node into our graph
     std::vector<Node*> vertices;
     std::map<std::string, Info> players;
     std::map<std::pair<std::string, std::string>, std::set<std::string>> teams;
