@@ -4,32 +4,34 @@
 #include <iostream>
 #include <set>
 #include <unordered_map>
-#include <climits>
+#include <cfloat>
 #include "cs225/PNG.h"
 using namespace std;
 
+struct Info {
+    std::set<std::string> teammates;
+    float per;
+    int count;
+    unsigned idx;
+};
+
 struct Node
 {
-    unsigned idx; // index of Node in node vector
-    int id; 
-    string id_;   // unique node ID (ex. Lebron James_1)
-    string team_;
-    string year_;
+    unsigned idx_;
+    string name_;   
     float per_;
 
-    Node(unsigned IDX, string ID, string TEAM, string YEAR, float PER)
+    Node(unsigned IDX, string NAME, float PER)
     {
-        idx = IDX;
-        id_ = ID;
-        team_ = TEAM;
-        year_ = YEAR;
+        idx_ = IDX;
+        name_ = NAME;
         per_ = PER;
     }
 
     std::unordered_map<Node*, float> adj_;
 
     void print() {
-        std::cout << id_ << " " << team_ << " " << year_ << " " << per_ << std::endl;
+        std::cout << name_ << " " << per_ << std::endl;
     }
 
     void print_adj() {
@@ -58,15 +60,18 @@ struct Edge {
 class PlayerGraph {
     public:
     PlayerGraph(const std::string filename);
-    std::vector<std::string> BFS(int orgin, int end);
+    std::vector<std::string> BFS(std::string origin, std::string end);
     Node* PlayerExists(std::string name);
-    std::pair<std::vector<int>, std::vector<int> > Djikstras(std::string playerName, std::string year);
+    std::pair<std::vector<float>, std::vector<int> > Djikstras(std::string playerName);
     std::vector<Coordinate> fruchtermanReingold(int height, int width, double k, double t, int iterations);
     cs225::PNG drawGraph(int height, int width);
     std::vector<Node*> file_to_graph(const std::string filename);
+    Node* getPlayer(int idx);
+    Node* getPlayer(std::string name);
 
     private:
     std::vector<Node*> nodeVector;
     std::vector<Edge> edgeVector;
-    std::pair<std::vector<int>, std::vector<int> > Djikstras(int src);
+    std::pair<std::vector<float>, std::vector<int> > Djikstras(int src);
+    std::vector<std::string> BFS(int startingNode, int finishNode);
 };

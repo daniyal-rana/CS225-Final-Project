@@ -228,15 +228,8 @@ CMakeFiles/main.dir/entry/main.cpp.o: ../entry/main.cpp \
   /usr/include/c++/11/debug/safe_unordered_container.tcc \
   /usr/include/c++/11/debug/safe_local_iterator.h \
   /usr/include/c++/11/debug/safe_local_iterator.tcc \
-  /usr/include/c++/11/climits \
-  /usr/lib/llvm-14/lib/clang/14.0.0/include/limits.h \
-  /usr/include/limits.h \
-  /usr/include/aarch64-linux-gnu/bits/posix1_lim.h \
-  /usr/include/aarch64-linux-gnu/bits/local_lim.h \
-  /usr/include/linux/limits.h \
-  /usr/include/aarch64-linux-gnu/bits/posix2_lim.h \
-  /usr/include/aarch64-linux-gnu/bits/xopen_lim.h \
-  /usr/include/aarch64-linux-gnu/bits/uio_lim.h \
+  /usr/include/c++/11/cfloat \
+  /usr/lib/llvm-14/lib/clang/14.0.0/include/float.h \
   ../lib/cs225/PNG.h \
   ../lib/cs225/HSLAPixel.h \
   /usr/include/c++/11/sstream \
@@ -249,9 +242,7 @@ CMakeFiles/main.dir/entry/main.cpp.o: ../entry/main.cpp \
 
 ../lib/cs225/HSLAPixel.h:
 
-/usr/include/aarch64-linux-gnu/bits/xopen_lim.h:
-
-/usr/lib/llvm-14/lib/clang/14.0.0/include/limits.h:
+/usr/include/c++/11/cfloat:
 
 /usr/include/c++/11/debug/safe_local_iterator.tcc:
 
@@ -263,8 +254,6 @@ CMakeFiles/main.dir/entry/main.cpp.o: ../entry/main.cpp \
 
 /usr/include/c++/11/bits/enable_special_members.h:
 
-/usr/include/aarch64-linux-gnu/bits/posix2_lim.h:
-
 /usr/include/c++/11/bits/invoke.h:
 
 /usr/include/c++/11/bits/uses_allocator.h:
@@ -275,11 +264,7 @@ CMakeFiles/main.dir/entry/main.cpp.o: ../entry/main.cpp \
 
 /usr/include/c++/11/bits/stl_multiset.h:
 
-/usr/include/aarch64-linux-gnu/bits/uio_lim.h:
-
 /usr/include/c++/11/bits/node_handle.h:
-
-/usr/include/limits.h:
 
 /usr/include/c++/11/bits/istream.tcc:
 
@@ -381,8 +366,6 @@ CMakeFiles/main.dir/entry/main.cpp.o: ../entry/main.cpp \
 
 /usr/include/aarch64-linux-gnu/bits/waitflags.h:
 
-/usr/include/c++/11/climits:
-
 /usr/include/c++/11/array:
 
 /usr/include/c++/11/debug/set:
@@ -412,8 +395,6 @@ CMakeFiles/main.dir/entry/main.cpp.o: ../entry/main.cpp \
 /usr/include/stdlib.h:
 
 /usr/include/c++/11/debug/formatter.h:
-
-/usr/include/aarch64-linux-gnu/bits/posix1_lim.h:
 
 /usr/include/c++/11/iostream:
 
@@ -450,8 +431,6 @@ CMakeFiles/main.dir/entry/main.cpp.o: ../entry/main.cpp \
 /usr/include/c++/11/debug/safe_sequence.tcc:
 
 /usr/include/aarch64-linux-gnu/bits/libc-header-start.h:
-
-/usr/include/linux/limits.h:
 
 /usr/include/aarch64-linux-gnu/bits/types/cookie_io_functions_t.h:
 
@@ -543,8 +522,6 @@ CMakeFiles/main.dir/entry/main.cpp.o: ../entry/main.cpp \
 
 /usr/include/c++/11/type_traits:
 
-/usr/include/aarch64-linux-gnu/bits/local_lim.h:
-
 /usr/include/ctype.h:
 
 /usr/include/aarch64-linux-gnu/bits/endianness.h:
@@ -592,6 +569,8 @@ CMakeFiles/main.dir/entry/main.cpp.o: ../entry/main.cpp \
 /usr/include/pthread.h:
 
 /usr/include/c++/11/bits/cpp_type_traits.h:
+
+/usr/lib/llvm-14/lib/clang/14.0.0/include/float.h:
 
 /usr/include/c++/11/bits/move.h:
 
