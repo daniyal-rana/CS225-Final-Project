@@ -120,14 +120,13 @@ std::vector<std::string> PlayerGraph::BFS(int startingNode, int finishNode) {
         int v = q.front();
         Node* curr = nodeVector[v];
         q.pop();
-
         for (auto neigh : curr->adj_) {
             if (visited[neigh.first->idx_] == false) {
                 prev[neigh.first->idx_] = v;
                 q.push(neigh.first->idx_);
+                visited[neigh.first->idx_] = true;
             }
         }
-        visited[v] = true;
         if (v == finishNode) break;
     }
 
