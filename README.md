@@ -1,7 +1,5 @@
 
 # <ins align = "center"> CS225-Final-Project </ins>
-
-# README
 ### How to execute code
 1. Open project in container using dockerfile
 2. Make new build folder with a new version ```mkdir build```
