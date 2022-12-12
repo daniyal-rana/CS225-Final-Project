@@ -3,12 +3,12 @@
 
 # How to use the Code
 ## Download and Install Clang++ https://clang.llvm.org/get_started.html
-1. Delete build folder
-2. Replace previous folder with a new version
-3. In your terminal, move into the build folder and type cmake ..
-4. Still in this directory, type make main to compile the main executable
-5. Type ./main to run the executable
-6. When running the executable, there is the opportunity to run 3 different algorithms in our NBA Player Graph
+1. Make new build folder with a new version (mkdir build)
+2. In your terminal, move into the build folder (cd build) and type cmake ..
+3. Still in this directory, type make main to compile the main executable
+4. Type ./main to run the executable
+5. When running the executable, there is the opportunity to run 3 different algorithms in our NBA Player Graph
+You can find the list of players in our graph in the CSV File
 
 BFS:
 Input 2 players that exists in the graph
