@@ -12,69 +12,156 @@
 
 
 TEST_CASE("BFS Test Case 0", "No Player Connection") {
-    const std::string filename = "../data/NBA_STATS_WITH_PER.csv";
+    const std::string filename = "../data/TEST_NBA_STATS_WITH_PER.csv";
     PlayerGraph playerGraph(filename);
     std::vector<std::string> output;
     std::vector<std::string> answer;
 
-    output = playerGraph.BFS("Andre Drummond", "Charles Thomas McMillen");
-    answer = {};
-    REQUIRE(output == answer);
+    output = playerGraph.BFS("Darrell Arthur", "Kyle Wiltjer");
 
-    output = playerGraph.BFS("Deandre Ayton", "Marvin Bagley III");
-    answer = {};
-    REQUIRE(output == answer);
+    REQUIRE(output.size() == 1);
 
-    output = playerGraph.BFS("Trae Young", "Luca Doncic");
-    answer = {};
-    REQUIRE(output == answer);
+    output = playerGraph.BFS("Hilton Armstrong", "Jeff Withey");
+    REQUIRE(output.size() == 1);
+
+    output = playerGraph.BFS("Stephen Zimmerman", "Nick Young");
+    REQUIRE(output.size() == 1);
 }
 
 TEST_CASE("BFS Test Case 1", "Direct Player Connection") {
-    const std::string filename = "../data/NBA_STATS_WITH_PER.csv";
+    const std::string filename = "../data/TEST_NBA_STATS_WITH_PER.csv";
     PlayerGraph playerGraph(filename);
     std::vector<std::string> output;
     std::vector<std::string> answer;
 
-    output = playerGraph.BFS("Bradley Beal", "John Wall");
-    answer = {"Bradley Beal", "John Wall"};
+    output = playerGraph.BFS("Troy Williams", "Nick Young");
+    answer = {"Troy Williams", "Nick Young"};
     REQUIRE(output == answer);
 
-    output = playerGraph.BFS("Kevin Garnett", "Paul Pierce");
-    answer = {"Kevin Garnett", "Paul Pierce"};
+    output = playerGraph.BFS("Brandan Wright", "Joel Anthony");
+    answer = {"Brandan Wright", "Joel Anthony"};
     REQUIRE(output == answer);
 
-    output = playerGraph.BFS("Isaiah Rider", "Chuck Person");
-    answer = {"Isaiah Rider", "Chuck Person"};
+    output = playerGraph.BFS("Kyle Wiltjer", "Jeff Withey");
+    answer = {"Kyle Wiltjer", "Jeff Withey"};
     REQUIRE(output == answer);
 }
 
 TEST_CASE("BFS Test Case 2", "One Mutual Teammate Connection") {
-    const std::string filename = "../data/NBA_STATS_WITH_PER.csv";
+    const std::string filename = "../data/TEST_NBA_STATS_WITH_PER.csv";
     PlayerGraph playerGraph(filename);
     std::vector<std::string> output;
     std::vector<std::string> answer;
 
-    output = playerGraph.BFS("Dwyane Wade", "Kobe Bryant");
-    answer = {"Dwyane Wade", "Jason Kapono","Kobe Bryant"};
+    output = playerGraph.BFS("Nick Young", "Brandan Wright");
+    answer = {"Nick Young", "Troy Williams", "Brandan Wright"};
     REQUIRE(output == answer);
 
-    output = playerGraph.BFS("Pau Gasol", "Tim Duncan");
-    answer = {"Pau Gasol", "Tony Parker", "Tim Duncan"};
+    output = playerGraph.BFS("Gilbert Arenas", "Jeff Withey");
+    answer = {"Gilbert Arenas", "Kyle Wiltjer", "Jeff Withey"};
     REQUIRE(output == answer);
 }
 
 TEST_CASE("BFS Test Case 3", "Two Mutual Teammate Connection") {
-    const std::string filename = "../data/NBA_STATS_WITH_PER.csv";
+    const std::string filename = "../data/TEST_NBA_STATS_WITH_PER.csv";
     PlayerGraph playerGraph(filename);
     std::vector<std::string> output;
     std::vector<std::string> answer;
 
-    output = playerGraph.BFS("Carmelo Anthony", "Bison Dele");
-    answer = {"Carmelo Anthony", "Von Wafer", "Theo Ratliff", "Bison Dele"};
+    output = playerGraph.BFS("Jeff Withey", "Nick Young");
+    answer = {"Jeff Withey", "Kyle Wiltjer", "Troy Williams", "Nick Young"};
     REQUIRE(output == answer);
 
-    output = playerGraph.BFS("Manute Bol", "Chris Paul");
-    answer = {"Manute Bol", "Tom Gugliotta", "Speedy Claxton", "Chris Paul"};
+    output = playerGraph.BFS("Carmelo Anthony", "Antonio Anderson");
+    answer = {"Carmelo Anthony", "Troy Williams", "Kyle Wiltjer", "Antonio Anderson"};
     REQUIRE(output == answer);
+}
+
+
+
+
+
+TEST_CASE("DJIKSTRAS Test Case 0", "No Player Connection") {
+    const std::string filename = "../data/TEST_NBA_STATS_WITH_PER.csv";
+    PlayerGraph playerGraph(filename);
+    std::string playerOne = "Troy Williams";
+    std::string playerTwo = "Stephen Zimmerman";
+
+    std::pair<std::vector<float>, std::vector<int>> shortestPaths = playerGraph.Djikstras(playerTwo);
+    std::vector<float> distances = shortestPaths.first;
+    std::vector<int> prev = shortestPaths.second;
+    Node* player = playerGraph.getPlayer(playerOne);
+    std::vector<std::string> output;
+    
+    std::vector<std::string> ans;
+    REQUIRE(ans.size() == output.size());
+}
+
+TEST_CASE("DJIKSTRAS Test Case 1", "Direct Player Connection") {
+    const std::string filename = "../data/TEST_NBA_STATS_WITH_PER.csv";
+    PlayerGraph playerGraph(filename);
+    std::string playerOne = "Troy Williams";
+    std::string playerTwo = "Nick Young";
+
+    std::pair<std::vector<float>, std::vector<int>> shortestPaths = playerGraph.Djikstras(playerTwo);
+    std::vector<float> distances = shortestPaths.first;
+    std::vector<int> prev = shortestPaths.second;
+    Node* player = playerGraph.getPlayer(playerOne);
+    std::vector<std::string> output;
+    output.push_back(player->name_);
+    while (player->name_ != playerTwo) {
+        int next = prev[player->idx_];
+        player = playerGraph.getPlayer(next);
+        output.push_back(player->name_);
+    }
+
+    std::vector<std::string> ans;
+    ans = {"Troy Williams", "Nick Young"};
+    REQUIRE(ans == output);
+}
+
+TEST_CASE("DJIKSTRAS Test Case 2", "One Mutual Teammate Connection") {
+    const std::string filename = "../data/TEST_NBA_STATS_WITH_PER.csv";
+    PlayerGraph playerGraph(filename);
+    std::string playerOne = "Kyle Wiltjer";
+    std::string playerTwo = "Nick Young";
+
+    std::pair<std::vector<float>, std::vector<int>> shortestPaths = playerGraph.Djikstras(playerTwo);
+    std::vector<float> distances = shortestPaths.first;
+    std::vector<int> prev = shortestPaths.second;
+    Node* player = playerGraph.getPlayer(playerOne);
+    std::vector<std::string> output;
+    output.push_back(player->name_);
+    while (player->name_ != playerTwo) {
+        int next = prev[player->idx_];
+        player = playerGraph.getPlayer(next);
+        output.push_back(player->name_);
+    }
+
+    std::vector<std::string> ans;
+    ans = {"Kyle Wiltjer", "Troy Williams", "Nick Young"};
+    REQUIRE(ans == output);
+}
+
+TEST_CASE("DJIKSTRAS Test Case 3", "Two Mutual Teammate Connection") {
+    const std::string filename = "../data/TEST_NBA_STATS_WITH_PER.csv";
+    PlayerGraph playerGraph(filename);
+    std::string playerOne = "Jeff Withey";
+    std::string playerTwo = "Nick Young";
+
+    std::pair<std::vector<float>, std::vector<int>> shortestPaths = playerGraph.Djikstras(playerTwo);
+    std::vector<float> distances = shortestPaths.first;
+    std::vector<int> prev = shortestPaths.second;
+    Node* player = playerGraph.getPlayer(playerOne);
+    std::vector<std::string> output;
+    output.push_back(player->name_);
+    while (player->name_ != playerTwo) {
+        int next = prev[player->idx_];
+        player = playerGraph.getPlayer(next);
+        output.push_back(player->name_);
+    }
+
+    std::vector<std::string> ans;
+    ans = {"Jeff Withey", "Kyle Wiltjer", "Troy Williams", "Nick Young"};
+    REQUIRE(ans == output);
 }
