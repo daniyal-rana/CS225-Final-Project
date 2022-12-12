@@ -1,6 +1,26 @@
 
 # <ins align = "center"> CS225-Final-Project </ins>
 
+# How to use the Code
+## Download and Install Clang++ https://clang.llvm.org/get_started.html
+1. Delete build folder
+2. Replace previous folder with a new version
+3. In your terminal, move into the build folder and type cmake ..
+4. Still in this directory, type make main to compile the main executable
+5. Type ./main to run the executable
+6. When running the executable, there is the opportunity to run 3 different algorithms in our NBA Player Graph
+
+BFS:
+Input 2 players that exists in the graph
+You will receive a response that starts from your first input to you last input.
+
+Dijkstra's:
+Input 2 players that exists in the graph that were teammates for a period of time
+You will receive a response that starts from your first input to you last input.
+
+Fruchterman-Reingold Layout:
+Input a player that exists in the graph
+You will receive a response that directs you to 2 images of the adjacently list before and after algorithm runs.
 
 
 # Project Proposal
