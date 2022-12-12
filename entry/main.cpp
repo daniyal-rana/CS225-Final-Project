@@ -6,7 +6,7 @@ int main() {
     PlayerGraph playerGraph(filename);
 
     // Run algorithms
-    std::vector<std::string> bfs = playerGraph.BFS("Brad Miller", "LeBron James");
+    std::vector<std::string> bfs = playerGraph.BFS("Chris Paul", "LeBron James");
     std::pair<std::vector<float>, std::vector<int>> shortestPaths = playerGraph.Djikstras("LeBron James");
 
     // Display results
@@ -23,7 +23,7 @@ int main() {
     std::cout << "Shortest Paths" << std::endl;
     Node* player = playerGraph.getPlayer("Chris Paul");
     player->print();
-    while (player->name_ != "Manute Bol") {
+    while (player->name_ != "LeBron James") {
         int next = prev[player->idx_];
         player = playerGraph.getPlayer(next);
         player->print();

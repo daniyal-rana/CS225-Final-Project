@@ -277,26 +277,19 @@ CMakeFiles/test.dir/tests/tests.cpp.o: ../tests/tests.cpp \
   /usr/include/c++/11/debug/safe_local_iterator.tcc \
   /usr/include/c++/11/cfloat \
   /usr/lib/llvm-14/lib/clang/14.0.0/include/float.h \
-  ../lib/cs225/PNG.h \
-  ../lib/cs225/HSLAPixel.h \
-  /usr/include/c++/11/sstream \
-  /usr/include/c++/11/bits/sstream.tcc \
   /usr/include/c++/11/fstream \
   /usr/include/c++/11/bits/codecvt.h \
   /usr/include/aarch64-linux-gnu/c++/11/bits/basic_file.h \
   /usr/include/aarch64-linux-gnu/c++/11/bits/c++io.h \
   /usr/include/c++/11/bits/fstream.tcc \
+  /usr/include/c++/11/sstream \
+  /usr/include/c++/11/bits/sstream.tcc \
   /usr/include/c++/11/map \
   /usr/include/c++/11/bits/stl_map.h \
   /usr/include/c++/11/bits/stl_multimap.h \
   /usr/include/c++/11/debug/map \
   /usr/include/c++/11/debug/map.h \
   /usr/include/c++/11/debug/multimap.h \
-  /usr/include/c++/11/list \
-  /usr/include/c++/11/bits/stl_list.h \
-  /usr/include/c++/11/bits/allocated_ptr.h \
-  /usr/include/c++/11/bits/list.tcc \
-  /usr/include/c++/11/debug/list \
   /usr/include/c++/11/queue \
   /usr/include/c++/11/deque \
   /usr/include/c++/11/bits/stl_deque.h \
@@ -337,8 +330,21 @@ CMakeFiles/test.dir/tests/tests.cpp.o: ../tests/tests.cpp \
   /usr/include/c++/11/functional \
   /usr/include/c++/11/bits/refwrap.h \
   /usr/include/c++/11/bits/std_function.h \
-  /usr/include/c++/11/pstl/execution_defs.h
+  /usr/include/c++/11/pstl/execution_defs.h \
+  ../lib/cs225/PNG.h \
+  ../lib/cs225/HSLAPixel.h \
+  /usr/include/c++/11/list \
+  /usr/include/c++/11/bits/stl_list.h \
+  /usr/include/c++/11/bits/allocated_ptr.h \
+  /usr/include/c++/11/bits/list.tcc \
+  /usr/include/c++/11/debug/list
 
+
+/usr/include/c++/11/debug/list:
+
+/usr/include/c++/11/list:
+
+../lib/cs225/PNG.h:
 
 /usr/include/c++/11/bits/refwrap.h:
 
@@ -374,6 +380,10 @@ CMakeFiles/test.dir/tests/tests.cpp.o: ../tests/tests.cpp \
 
 /usr/include/aarch64-linux-gnu/bits/mathcalls-narrow.h:
 
+/usr/include/c++/11/bits/allocated_ptr.h:
+
+/usr/include/aarch64-linux-gnu/bits/mathcalls.h:
+
 /usr/include/math.h:
 
 /usr/include/c++/11/bits/stl_queue.h:
@@ -387,14 +397,6 @@ CMakeFiles/test.dir/tests/tests.cpp.o: ../tests/tests.cpp \
 /usr/include/c++/11/deque:
 
 /usr/include/c++/11/queue:
-
-/usr/include/c++/11/debug/list:
-
-/usr/include/aarch64-linux-gnu/bits/mathcalls.h:
-
-/usr/include/c++/11/bits/allocated_ptr.h:
-
-/usr/include/c++/11/list:
 
 /usr/include/c++/11/debug/multimap.h:
 
@@ -411,8 +413,6 @@ CMakeFiles/test.dir/tests/tests.cpp.o: ../tests/tests.cpp \
 /usr/include/aarch64-linux-gnu/c++/11/bits/c++io.h:
 
 /usr/include/aarch64-linux-gnu/c++/11/bits/basic_file.h:
-
-../lib/cs225/PNG.h:
 
 /usr/lib/llvm-14/lib/clang/14.0.0/include/float.h:
 
