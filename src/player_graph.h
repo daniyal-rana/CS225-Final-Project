@@ -5,8 +5,15 @@
 #include <set>
 #include <unordered_map>
 #include <cfloat>
+#include <fstream>
+#include <iostream>
+#include <sstream>
+#include <map>
+#include <queue>
+#include <cmath>
+#include <tuple>
+#include <algorithm>
 #include "cs225/PNG.h"
-using namespace std;
 
 struct Info {
     std::set<std::string> teammates;
@@ -18,17 +25,16 @@ struct Info {
 struct Node
 {
     unsigned idx_;
-    string name_;   
+    std::string name_;   
     float per_;
+    std::unordered_map<Node*, float> adj_;
 
-    Node(unsigned IDX, string NAME, float PER)
+    Node(unsigned IDX, std::string NAME, float PER)
     {
         idx_ = IDX;
         name_ = NAME;
         per_ = PER;
     }
-
-    std::unordered_map<Node*, float> adj_;
 
     void print() {
         std::cout << name_ << " " << per_ << std::endl;
@@ -45,33 +51,46 @@ struct Node
     }
 };
 
-struct Coordinate {
-    double x;
-    double y;
-};
-
 struct Edge {
     int u;
     int v;
-    int weight;
+    float weight;
+
+    Edge(int U, int V, int WEIGHT) {
+        u = U;
+        v = V;
+        weight = WEIGHT;
+    }
+};
+
+struct Point {
+    double x;
+    double y;
+
+    Point(double X, double Y) {
+        x = X;
+        y = Y;
+    }
 };
 
 
 class PlayerGraph {
     public:
-    PlayerGraph(const std::string filename);
-    std::vector<std::string> BFS(std::string startID, std::string endID);
-    Node* PlayerExists(std::string name);
-    std::pair<std::vector<float>, std::vector<int> > Djikstras(std::string playerName);
-    std::vector<Coordinate> fruchtermanReingold(int height, int width, double k, double t, int iterations);
-    cs225::PNG drawGraph(int height, int width);
-    std::vector<Node*> file_to_graph(const std::string filename);
-    Node* getPlayer(int idx);
-    Node* getPlayer(std::string name);
+        PlayerGraph(const std::string filename);
+        std::vector<Node*> file_to_graph(const std::string filename);
+        std::vector<std::string> BFS(std::string startID, std::string endID);
+        std::pair<std::vector<float>, std::vector<int> > Djikstras(std::string playerName);
+        std::vector<Point> fruchtermanReingold(std::string playerName);
+        cs225::PNG drawGraph(int height, int width, std::vector<Point> nodes, std::vector<Edge> edges);
+        std::vector<Point> line(Point p1, Point p2);
+        Node* getPlayer(int idx);
+        Node* getPlayer(std::string name);
+        Node* PlayerExists(std::string name);
 
     private:
-    std::vector<Node*> nodeVector;
-    std::vector<Edge> edgeVector;
-    std::pair<std::vector<float>, std::vector<int> > Djikstras(int src);
-    std::vector<std::string> BFS(int startingNode, int finishNode);
+        std::vector<Node*> nodeVector;
+        std::vector<Edge> edgeVector;
+        std::vector<std::string> BFS(int startingNode, int finishNode);
+        std::pair<std::vector<float>, std::vector<int> > Djikstras(int src);
+        std::vector<Point> fruchtermanReingold(std::vector<Node*> vertices, std::vector<Edge> edges, int height, int width, int iterations);
 };

@@ -1,17 +1,9 @@
 #include "player_graph.h"
-#include <fstream>
-#include <iostream>
-#include <sstream>
-#include <map>
-#include <queue>
-#include <cmath>
-#include <algorithm>
-#include <algorithm>
 
-
-std::vector<Node *> PlayerGraph::file_to_graph(const std::string filename)
+std::vector<Node*> PlayerGraph::file_to_graph(const std::string filename)
 {
     std::vector<Node*> vertices;
+    std::vector<Edge> edges;
     std::map<std::string, Info> players;
     std::map<std::pair<std::string, std::string>, std::set<std::string>> teams;
     std::ifstream file(filename);
@@ -22,7 +14,7 @@ std::vector<Node *> PlayerGraph::file_to_graph(const std::string filename)
         std::getline(file, line);
         while (std::getline(file, line)) {
             std::vector<std::string> player;
-            stringstream ss(line);
+            std::stringstream ss(line);
             while (ss.good()) {
                 std::string item;
                 std::getline(ss, item, ',');
@@ -61,19 +53,27 @@ std::vector<Node *> PlayerGraph::file_to_graph(const std::string filename)
         idx++;
     }
 
+    std::vector<bool> visited(players.size(), false);
+
     for (auto& player : players) {
         int playerPos = player.second.idx;
+        visited[playerPos] = true;
         for (std::string teammate : player.second.teammates) {
             vertices[playerPos]->adj_[vertices[players[teammate].idx]] = (1 / (vertices[playerPos]->per_ + vertices[players[teammate].idx]->per_) / 2);
+            Edge edge(player.second.idx, players[teammate].idx, (1 / (vertices[playerPos]->per_ + vertices[players[teammate].idx]->per_) / 2));
+            if (!visited[players[teammate].idx]) {
+                edges.push_back(edge);
+            }
         }
     }
+
+    edgeVector = edges;
 
     return vertices;
 }
 
 PlayerGraph::PlayerGraph(const std::string filename) {
         nodeVector = file_to_graph(filename);
-        edgeVector = std::vector<Edge>();
 }
 
 std::vector<std::string> PlayerGraph::BFS(std::string startID, std::string endID) {
@@ -151,7 +151,7 @@ std::pair<std::vector<float>, std::vector<int>> PlayerGraph::Djikstras(int src) 
     std::vector<float> distances(nodeVector.size(), FLT_MAX);
     std::vector<int> prev(nodeVector.size(), -1);
     std::vector<bool> visited(nodeVector.size(), false);
-    std::priority_queue<std::pair<float, int>, std::vector<pair<float, int>>, std::greater<std::pair<float, int>>> heap;
+    std::priority_queue<std::pair<float, int>, std::vector<std::pair<float, int>>, std::greater<std::pair<float, int>>> heap;
 
     distances[src] = 0;
     heap.push(std::pair<float, int>(0.0, src));
@@ -195,81 +195,152 @@ std::pair<std::vector<float>, std::vector<int>> PlayerGraph::Djikstras(std::stri
     return Djikstras(src);
 }
 
-std::vector<Coordinate> PlayerGraph::fruchtermanReingold(int height, int width, double k, double t, int iterations) {
-    std::vector<Coordinate> positions;
-    for (auto& n : positions) {
-        n.x = rand() % width;
-        n.y = rand() % height;
+std::vector<Point>  PlayerGraph::fruchtermanReingold(std::vector<Node*> vertices, std::vector<Edge> edges, int height, int width, int iterations) {
+    std::vector<Point> positions(vertices.size(), Point(0, 0));
+    double k = std::sqrt(height * width / positions.size());
+    double temperature = width / 10;
+
+    for (Point& position : positions) {
+        position.x = rand() % width;
+        position.y = rand() % height;
     }
+
+    drawGraph(height, width, positions, edges).writeToFile("./before.png");
+
     for (int i = 0; i < iterations; i++) {
-        std::vector<Coordinate> forces(positions.size(), {0, 0});
-        // Calculate repulsive forces
+        std::vector<Point> displacements(positions.size(), Point(0, 0));
+        // Repulsive forces
         for (unsigned j = 0; j < positions.size(); j++) {
-            for (unsigned k = j + 1; k < positions.size(); k++) { 
+            for (unsigned k = 0; k < positions.size(); k++) {
+                if (j == k) continue;
                 double dx = positions[j].x - positions[k].x;
                 double dy = positions[j].y - positions[k].y;
-                double d = std::sqrt(dx * dx + dy * dy);
-                if (d > 0) {
-                double f = k * k / d;
-                forces[j].x += f * dx / d;
-                forces[j].y += f * dy / d;
-                forces[k].x -= f * dx / d;
-                forces[k].y -= f * dy / d;
+                double distance = std::sqrt(dx * dx + dy * dy);
+                if (distance > 0) {
+                    double repulsion = (k * k) / distance;
+                    displacements[j].x += dx / distance * repulsion;
+                    displacements[j].y += dy / distance * repulsion;
                 }
             }
         }
-        // Calculate attractive forces
-        for (auto& e : edgeVector) {
-            double dx = positions[e.u].x - positions[e.v].x;
-            double dy = positions[e.u].y - positions[e.v].y;
-            double d = sqrt(dx * dx + dy * dy);
-            if (d > 0) {
-                double f = d * d / k;
-                forces[e.u].x -= f * dx / d;
-                forces[e.u].y -= f * dy / d;
-                forces[e.v].x += f * dx / d;
-                forces[e.v].y += f * dy / d;
+        // Attractive forces 
+        for (Edge e : edges) {
+            double dx = positions[e.v].x - positions[e.u].x;
+            double dy = positions[e.v].y - positions[e.u].y;
+            double distance = sqrt(dx * dx + dy * dy);
+            if (distance > 0) {
+                double attraction = (distance * distance) / k;
+                displacements[e.v].x -= dx / distance * attraction;
+                displacements[e.v].y -= dy / distance * attraction;
+                displacements[e.u].x += dx / distance * attraction;
+                displacements[e.u].y += dy / distance * attraction;
             }
         }
+        // Adjust positions
         for (unsigned j = 0; j < positions.size(); j++) {
-            double dx = t * forces[j].x;
-            double dy = t * forces[j].y;
-            double d = sqrt(dx * dx + dy * dy);
-            if (d > 0) {
-                double limited_d = std::min(d, k);
-                positions[j].x += limited_d * dx / d;
-                positions[j].y += limited_d * dy / d;
+            double dx = displacements[j].x;
+            double dy = displacements[j].y;
+            double displacement_norm = std::sqrt(dx * dx + dy * dy);
+            double capped_displacement_norm = std::min(displacement_norm, temperature);
+            if (displacement_norm > 0) {
+                positions[j].x += dx / displacement_norm * capped_displacement_norm;
+                positions[j].y += dy / displacement_norm * capped_displacement_norm;
             }
         }
+        // Fix positions outside of frame
         for (auto& n : positions) {
-            n.x = std::max(0.0, std::min(n.x, (double)width));
-            n.y = std::max(0.0, std::min(n.y, (double)height));
+            n.x = std::max(0.0, std::min(n.x, (double)width - 1));
+            n.y = std::max(0.0, std::min(n.y, (double)height - 1));
         }
-        t -= 0.1;
+        // Lower temperature
+        temperature -= (width / 10) / iterations;
     }
+
+    drawGraph(height, width, positions, edges).writeToFile("./after.png");
+
     return positions;
 }
 
-cs225::PNG PlayerGraph::drawGraph(int height, int width) {
-    std::vector<Coordinate> positions = fruchtermanReingold(height , width, 0.1, 0.1, 100);
+std::vector<Point> PlayerGraph::fruchtermanReingold(std::string playerName) {
+    Node* player = getPlayer(playerName);
+
+    if (player == NULL) {
+        return std::vector<Point>();
+    }
+
+    std::vector<Node*> vertices;
+    std::vector<Edge> edges;
+    int idx = 1;
+ 
+    vertices.push_back(player);
+    for (auto teammate : player->adj_) {
+        Edge e(0, idx, teammate.second);
+        vertices.push_back(teammate.first);
+        edges.push_back(e);
+        idx++;
+    }
+
+    return fruchtermanReingold(vertices, edges, 1000, 1000, 100);
+}
+
+cs225::PNG PlayerGraph::drawGraph(int height, int width, std::vector<Point> nodes, std::vector<Edge> edges) {
+    // Create empty image
     cs225::PNG img;
     img.resize(width, height);
-    for (Coordinate position : positions) {
-        cs225::HSLAPixel& pixel = img.getPixel(position.x, position.y);
-        pixel.l = 0;
+
+    // Add nodes
+    for (Point node : nodes) {
+        for (int i = -2; i < 2; i++) {
+            for (int j = -2 ; j < 2; j++) {
+                cs225::HSLAPixel& pixel = img.getPixel(node.x + i, node.y + j);
+                pixel.h = 0;
+                pixel.s = 1;
+                pixel.l = 0.5;
+            }
+        }
     }
+
+    // Add edges
+    for (auto e : edges) {
+        Point p1(nodes[e.u].x, nodes[e.u].y);
+        Point p2(nodes[e.v].x, nodes[e.v].y);
+        std::vector<Point> points = line(p1, p2);
+
+        for (Point point : points) {
+            cs225::HSLAPixel& pixel = img.getPixel(point.x, point.y);
+            pixel.l = 0.0;
+        }
+    } 
+
     return img;
 }
 
- Node* PlayerGraph::getPlayer(int idx) {
-    return nodeVector[idx];
- }
+std::vector<Point> PlayerGraph::line(Point p1, Point p2) {
+    std::vector<Point> points;
+    double dx = p2.x - p1.x;
+    double dy = p2.y - p1.y;
+    double length = sqrt(dx * dx + dy * dy);
+    int n = length;
 
- Node* PlayerGraph::getPlayer(std::string name) {
+    for (int i = 0; i < n; i++) {
+        double x = round(p1.x + (i + 1) * dx / n);
+        double y = round(p1.y + (i + 1) * dy / n);
+        Point point(x, y);
+        points.push_back(point);
+    }
+
+    return points;
+}
+
+Node* PlayerGraph::getPlayer(int idx) {
+    return nodeVector[idx];
+}
+
+Node* PlayerGraph::getPlayer(std::string name) {
     for (Node* player : nodeVector) {
         if (player->name_ == name) {
             return player;
         }
     }
     return NULL;
- }
+}

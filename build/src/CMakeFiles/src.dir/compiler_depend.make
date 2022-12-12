@@ -230,15 +230,13 @@ src/CMakeFiles/src.dir/player_graph.cpp.o: ../src/player_graph.cpp \
   /usr/include/c++/11/debug/safe_local_iterator.tcc \
   /usr/include/c++/11/cfloat \
   /usr/lib/llvm-14/lib/clang/14.0.0/include/float.h \
-  ../lib/cs225/PNG.h \
-  ../lib/cs225/HSLAPixel.h \
-  /usr/include/c++/11/sstream \
-  /usr/include/c++/11/bits/sstream.tcc \
   /usr/include/c++/11/fstream \
   /usr/include/c++/11/bits/codecvt.h \
   /usr/include/aarch64-linux-gnu/c++/11/bits/basic_file.h \
   /usr/include/aarch64-linux-gnu/c++/11/bits/c++io.h \
   /usr/include/c++/11/bits/fstream.tcc \
+  /usr/include/c++/11/sstream \
+  /usr/include/c++/11/bits/sstream.tcc \
   /usr/include/c++/11/map \
   /usr/include/c++/11/bits/stl_map.h \
   /usr/include/c++/11/bits/stl_multimap.h \
@@ -286,8 +284,12 @@ src/CMakeFiles/src.dir/player_graph.cpp.o: ../src/player_graph.cpp \
   /usr/include/c++/11/functional \
   /usr/include/c++/11/bits/refwrap.h \
   /usr/include/c++/11/bits/std_function.h \
-  /usr/include/c++/11/pstl/execution_defs.h
+  /usr/include/c++/11/pstl/execution_defs.h \
+  ../lib/cs225/PNG.h \
+  ../lib/cs225/HSLAPixel.h
 
+
+../lib/cs225/PNG.h:
 
 /usr/include/c++/11/bits/refwrap.h:
 
@@ -328,8 +330,6 @@ src/CMakeFiles/src.dir/player_graph.cpp.o: ../src/player_graph.cpp \
 /usr/include/aarch64-linux-gnu/bits/mathcalls-narrow.h:
 
 /usr/include/aarch64-linux-gnu/bits/mathcalls.h:
-
-/usr/include/aarch64-linux-gnu/bits/mathcalls-helper-functions.h:
 
 /usr/include/c++/11/bits/functional_hash.h:
 
@@ -389,6 +389,8 @@ src/CMakeFiles/src.dir/player_graph.cpp.o: ../src/player_graph.cpp \
 
 /usr/include/c++/11/debug/safe_unordered_base.h:
 
+/usr/include/aarch64-linux-gnu/bits/mathcalls-helper-functions.h:
+
 /usr/include/aarch64-linux-gnu/bits/stdint-uintn.h:
 
 /usr/include/c++/11/cstdio:
@@ -422,10 +424,6 @@ src/CMakeFiles/src.dir/player_graph.cpp.o: ../src/player_graph.cpp \
 /usr/include/aarch64-linux-gnu/bits/typesizes.h:
 
 /usr/include/c++/11/cstdint:
-
-/usr/include/aarch64-linux-gnu/bits/fp-fast.h:
-
-/usr/include/aarch64-linux-gnu/bits/types/FILE.h:
 
 /usr/lib/llvm-14/lib/clang/14.0.0/include/float.h:
 
@@ -472,6 +470,10 @@ src/CMakeFiles/src.dir/player_graph.cpp.o: ../src/player_graph.cpp \
 /usr/include/c++/11/bits/stl_tree.h:
 
 /usr/include/c++/11/debug/multiset.h:
+
+../lib/cs225/HSLAPixel.h:
+
+/usr/include/aarch64-linux-gnu/c++/11/bits/c++config.h:
 
 /usr/include/aarch64-linux-gnu/bits/errno.h:
 
@@ -703,8 +705,6 @@ src/CMakeFiles/src.dir/player_graph.cpp.o: ../src/player_graph.cpp \
 
 /usr/include/c++/11/bits/vector.tcc:
 
-../lib/cs225/PNG.h:
-
 /usr/include/c++/11/bits/locale_facets.tcc:
 
 /usr/include/c++/11/debug/vector:
@@ -813,9 +813,13 @@ src/CMakeFiles/src.dir/player_graph.cpp.o: ../src/player_graph.cpp \
 
 /usr/include/c++/11/cfloat:
 
-/usr/include/aarch64-linux-gnu/c++/11/bits/c++config.h:
+/usr/include/c++/11/bits/basic_ios.tcc:
 
-../lib/cs225/HSLAPixel.h:
+/usr/include/c++/11/bits/enable_special_members.h:
+
+/usr/include/c++/11/bits/codecvt.h:
+
+/usr/include/c++/11/bits/fstream.tcc:
 
 /usr/include/aarch64-linux-gnu/bits/types/struct_timeval.h:
 
@@ -824,14 +828,6 @@ src/CMakeFiles/src.dir/player_graph.cpp.o: ../src/player_graph.cpp \
 /usr/include/c++/11/new:
 
 /usr/include/c++/11/bits/sstream.tcc:
-
-/usr/include/c++/11/bits/basic_ios.tcc:
-
-/usr/include/c++/11/bits/enable_special_members.h:
-
-/usr/include/c++/11/bits/codecvt.h:
-
-/usr/include/c++/11/bits/fstream.tcc:
 
 /usr/include/c++/11/bits/stl_map.h:
 
@@ -860,3 +856,7 @@ src/CMakeFiles/src.dir/player_graph.cpp.o: ../src/player_graph.cpp \
 /usr/include/aarch64-linux-gnu/bits/types/wint_t.h:
 
 /usr/include/aarch64-linux-gnu/bits/flt-eval-method.h:
+
+/usr/include/aarch64-linux-gnu/bits/types/FILE.h:
+
+/usr/include/aarch64-linux-gnu/bits/fp-fast.h:
