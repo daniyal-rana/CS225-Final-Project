@@ -20,7 +20,7 @@ You will receive a response that starts from your first input to you last input.
 
 Fruchterman-Reingold Layout:
 Input a player that exists in the graph
-You will receive a response that directs you to 2 images of the adjacently list before and after algorithm runs.
+You will receive a response that directs you to 2 images of the adjacently list before and after algorithm runs (before.png, after.png).
 
 
 # Project Proposal
