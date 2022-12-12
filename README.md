@@ -10,15 +10,15 @@
 5. Type ./main to run the executable
 6. When running the executable, there is the opportunity to run 3 different algorithms in our NBA Player Graph
 
-##BFS:
+BFS:
 Input 2 players that exists in the graph
 You will receive a response that starts from your first input to you last input.
 
-##Dijkstra's:
+Dijkstra's:
 Input 2 players that exists in the graph that were teammates for a period of time
 You will receive a response that starts from your first input to you last input.
 
-##Fruchterman-Reingold Layout:
+Fruchterman-Reingold Layout:
 Input a player that exists in the graph
 You will receive a response that directs you to 2 images of the adjacently list before and after algorithm runs.
 
