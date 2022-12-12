@@ -2,7 +2,6 @@
 # <ins align = "center"> CS225-Final-Project </ins>
 
 # README
-## Download and Install Clang++ https://clang.llvm.org/get_started.html
 ### How to execute code
 1. Open project in container using dockerfile
 2. Make new build folder with a new version ```mkdir build```
@@ -40,5 +39,4 @@ Data and Data parsing of our NBA dataset is found in the data folder.
 Data parsing test cases are found here:
 https://github.com/daniyal-rana/CS225-Final-Project/blob/f795fadf9651656b4b24c705d9277c1fdd45f5b7/data/dataset_test.ipynb
 
-Presentation Video
-https://mediaspace.illinois.edu/media/t/1_6bk1kda0
+Presentation Video: https://mediaspace.illinois.edu/media/t/1_6bk1kda0
