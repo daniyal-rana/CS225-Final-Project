@@ -21,9 +21,9 @@ int main() {
     
     std::cout << '\n';
     std::cout << "Shortest Paths" << std::endl;
-    Node* player = playerGraph.getPlayer("Brad Miller");
+    Node* player = playerGraph.getPlayer("Chris Paul");
     player->print();
-    while (player->name_ != "LeBron James") {
+    while (player->name_ != "Manute Bol") {
         int next = prev[player->idx_];
         player = playerGraph.getPlayer(next);
         player->print();
