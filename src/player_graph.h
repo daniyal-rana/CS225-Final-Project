@@ -82,7 +82,6 @@ class PlayerGraph {
     public:
         PlayerGraph(const std::string filename);
         std::vector<Node*> file_to_graph(const std::string filename);
-
         std::vector<std::string> BFS(std::string startID, std::string endID);
         std::pair<std::vector<float>, std::vector<int> > Djikstras(std::string playerName);
         std::vector<Point> fruchtermanReingold(std::string playerName);

@@ -21,6 +21,9 @@ std::vector<Node*> PlayerGraph::file_to_graph(const std::string filename)
                 player.push_back(item);
             }
             std::string name = player[3]; // player name
+            if (name[name.length() - 1] == '*') {
+                name = name.substr(0, name.length() - 1);
+            }
             std::pair<std::string, std::string> team(player[6], player[2]); // team.first --> team, team.second --> year
             float per = std::stof(player[player.size() - 1]);
             if (per < 0.0) per = 0.0;
