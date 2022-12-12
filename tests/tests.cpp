@@ -59,10 +59,6 @@ TEST_CASE("BFS Test Case 2", "One Mutual Teammate Connection") {
     answer = {"Dwyane Wade", "Jason Kapono","Kobe Bryant"};
     REQUIRE(output == answer);
 
-    // output = playerGraph.BFS("Marlon Maxey", "Michael Jordan");
-    // answer = {"Marlon Maxey", "Christian Laettner","Michael Jordan"};
-    // REQUIRE(output == answer);
-
     output = playerGraph.BFS("Pau Gasol", "Tim Duncan");
     answer = {"Pau Gasol", "Tony Parker", "Tim Duncan"};
     REQUIRE(output == answer);
@@ -74,10 +70,6 @@ TEST_CASE("BFS Test Case 3", "Two Mutual Teammate Connection") {
     std::vector<std::string> output;
     std::vector<std::string> answer;
 
-    // output = playerGraph.BFS("Michael Beasley", "George Gervin");
-    // answer = {"Michael Beasley", "Brad Miller", "Charles Oakley","George Gervin"};
-    // REQUIRE(output == answer);
-
     output = playerGraph.BFS("Carmelo Anthony", "Bison Dele");
     answer = {"Carmelo Anthony", "Von Wafer", "Theo Ratliff", "Bison Dele"};
     REQUIRE(output == answer);
@@ -86,24 +78,3 @@ TEST_CASE("BFS Test Case 3", "Two Mutual Teammate Connection") {
     answer = {"Manute Bol", "Tom Gugliotta", "Speedy Claxton", "Chris Paul"};
     REQUIRE(output == answer);
 }
-
-TEST_CASE("BFS Test Case 4", "Multiple Mutual Teammate Connection") {
-    const std::string filename = "../data/NBA_STATS_WITH_PER.csv";
-    PlayerGraph playerGraph(filename);
-    std::vector<std::string> output;
-    std::vector<std::string> answer;
-
-    // output = playerGraph.BFS("Rick Barry", "Lamarcus Aldridge");
-    // answer = {"Rick Barry", "George Johnson", "Herb Williams", "Marcus Camby", "Lamarcus Aldridge", "Lamarcus Aldridge"};
-    // REQUIRE(output == answer);
-
-    // output = playerGraph.BFS("Bob Cousy", "Ricky Rubio");
-    // answer = {"Bob Cousy", "John Havlicek", "Cedric Maxwell", "Benoit Benjamin", "Andre Miller", "Ricky Rubio"};
-    // REQUIRE(output == answer);
-
-    // output = playerGraph.BFS("Calvin Murphy", "Ricky Rubio");
-    // answer = {"Calvin Murphy", "Elvin Hayes", "Rick Mahorn", "Nazr Mohammed", "Russell Westbrook"};
-    // REQUIRE(output == answer);
-}
-
-
