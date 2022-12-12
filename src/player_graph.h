@@ -36,6 +36,10 @@ struct Node
         per_ = PER;
     }
 
+    std::string print_name() {
+        return name_;
+    }
+
     void print() {
         std::cout << name_ << " " << per_ << std::endl;
     }
@@ -78,6 +82,7 @@ class PlayerGraph {
     public:
         PlayerGraph(const std::string filename);
         std::vector<Node*> file_to_graph(const std::string filename);
+
         std::vector<std::string> BFS(std::string startID, std::string endID);
         std::pair<std::vector<float>, std::vector<int> > Djikstras(std::string playerName);
         std::vector<Point> fruchtermanReingold(std::string playerName);
@@ -85,7 +90,7 @@ class PlayerGraph {
         std::vector<Point> line(Point p1, Point p2);
         Node* getPlayer(int idx);
         Node* getPlayer(std::string name);
-        Node* PlayerExists(std::string name);
+        bool PlayerExists(std::string name);
 
     private:
         std::vector<Node*> nodeVector;

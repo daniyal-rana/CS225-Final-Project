@@ -94,16 +94,10 @@ std::vector<std::string> PlayerGraph::BFS(std::string startID, std::string endID
     }
 
     if (src == (int)nodeVector.size() || endp == (int)nodeVector.size()) {
-        std::cout << "Player does not exist" << std::endl;
         return std::vector<std::string>();
     }
 
     std::vector<std::string> result = BFS(src, endp);
-    if (result.size() == 0) {
-        std::cout << "Connection between " << startID << " and " << endID <<  "does not exist" << std::endl;
-    } else  {
-        std::cout<< "Connection Exist" << std::endl;
-    }
     return result;
 }
   
@@ -137,14 +131,6 @@ std::vector<std::string> PlayerGraph::BFS(int startingNode, int finishNode) {
     }
     std::reverse(result.begin(), result.end());
     return result;    
-}
-
-
-Node* PlayerGraph::PlayerExists(std::string name) {
-    for (Node* node : nodeVector) {
-        if (name.find(node->name_) != std::string::npos) return node;
-    }
-    return nullptr;
 }
 
 std::pair<std::vector<float>, std::vector<int>> PlayerGraph::Djikstras(int src) {
@@ -205,7 +191,7 @@ std::vector<Point>  PlayerGraph::fruchtermanReingold(std::vector<Node*> vertices
         position.y = rand() % height;
     }
 
-    drawGraph(height, width, positions, edges).writeToFile("./before.png");
+    drawGraph(height, width, positions, edges).writeToFile("../before.png");
 
     for (int i = 0; i < iterations; i++) {
         std::vector<Point> displacements(positions.size(), Point(0, 0));
@@ -256,7 +242,7 @@ std::vector<Point>  PlayerGraph::fruchtermanReingold(std::vector<Node*> vertices
         temperature -= (width / 10) / iterations;
     }
 
-    drawGraph(height, width, positions, edges).writeToFile("./after.png");
+    drawGraph(height, width, positions, edges).writeToFile("../after.png");
 
     return positions;
 }
@@ -280,7 +266,7 @@ std::vector<Point> PlayerGraph::fruchtermanReingold(std::string playerName) {
         idx++;
     }
 
-    return fruchtermanReingold(vertices, edges, 1000, 1000, 100);
+    return fruchtermanReingold(vertices, edges, 1000, 1000, 50);
 }
 
 cs225::PNG PlayerGraph::drawGraph(int height, int width, std::vector<Point> nodes, std::vector<Edge> edges) {
@@ -290,8 +276,8 @@ cs225::PNG PlayerGraph::drawGraph(int height, int width, std::vector<Point> node
 
     // Add nodes
     for (Point node : nodes) {
-        for (int i = -2; i < 2; i++) {
-            for (int j = -2 ; j < 2; j++) {
+        for (int i = -2; i < 3; i++) {
+            for (int j = -2 ; j < 3; j++) {
                 cs225::HSLAPixel& pixel = img.getPixel(node.x + i, node.y + j);
                 pixel.h = 0;
                 pixel.s = 1;
@@ -343,4 +329,11 @@ Node* PlayerGraph::getPlayer(std::string name) {
         }
     }
     return NULL;
+}
+
+bool PlayerGraph::PlayerExists(std::string name) {
+    for (Node* node : nodeVector) {
+        if (node->name_ == name) return true;
+    }
+    return false;
 }
