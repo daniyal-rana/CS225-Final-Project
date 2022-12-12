@@ -165,3 +165,28 @@ TEST_CASE("DJIKSTRAS Test Case 3", "Two Mutual Teammate Connection") {
     ans = {"Jeff Withey", "Kyle Wiltjer", "Troy Williams", "Nick Young"};
     REQUIRE(ans == output);
 }
+
+
+TEST_CASE("FR Algorithm Test Case 1", "Same Number of Points") {
+    const std::string filename = "../data/TEST_NBA_STATS_WITH_PER.csv";
+    PlayerGraph playerGraph(filename);
+
+    std::string playerOne = "Troy Williams";
+
+
+    Node* player = playerGraph.getPlayer(playerOne);
+
+    std::vector<Node*> vertices;
+
+ 
+    vertices.push_back(player);
+    for (auto teammate : player->adj_) {
+        vertices.push_back(teammate.first);
+    }
+
+    std::vector<Point> ans = playerGraph.fruchtermanReingold(playerOne);
+    std::cout << ans.size() << std::endl;
+    std::cout << vertices.size() << std::endl;
+
+    REQUIRE(ans.size() == vertices.size());
+}
