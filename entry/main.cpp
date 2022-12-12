@@ -43,7 +43,7 @@ int main() {
         std::vector<std::string> bfs = playerGraph.BFS(playerOne, playerTwo);
         if (bfs.empty()) {
             std::cout << std::endl;
-            std::cout << "There is no path between the two players. Please check spelling." << std::endl;
+            std::cout << "There is no path between the two players." << std::endl;
         } else {
             std::cout << std::endl;
             std::cout << "Here is the path between the two: ";

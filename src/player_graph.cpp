@@ -20,11 +20,11 @@ std::vector<Node*> PlayerGraph::file_to_graph(const std::string filename)
                 std::getline(ss, item, ',');
                 player.push_back(item);
             }
-            std::string name = player[3]; // player name
+            std::string name = player[3];
             if (name[name.length() - 1] == '*') {
                 name = name.substr(0, name.length() - 1);
             }
-            std::pair<std::string, std::string> team(player[6], player[2]); // team.first --> team, team.second --> year
+            std::pair<std::string, std::string> team(player[6], player[2]);
             float per = std::stof(player[player.size() - 1]);
             if (per < 0.0) per = 0.0;
             if (players.find(name) == players.end()) {
@@ -37,8 +37,6 @@ std::vector<Node*> PlayerGraph::file_to_graph(const std::string filename)
                 players[name].per += per;
                 players[name].count++;
             }
-            // Update the player's teammates set
-            // Set doesn't allow duplicates! Hooray!
             if (teams.find(team) != teams.end()) {
                 for (std::string teammate : teams[team]) {
                     players[name].teammates.insert(teammate);
